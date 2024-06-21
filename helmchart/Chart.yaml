@@ -1,0 +1,5 @@
+apiVersion: v2
+name: horner-reader
+description: A web app for tracking progress through the Horner Bible Reading program
+type: application
+version: 0.1.0

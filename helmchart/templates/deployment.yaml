@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name}}-deployment
+  labels:
+    app: {{.Release.Name}}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Release.Name}}
+    spec:
+      containers:
+        - name: {{.Release.Name}}-container
+          image: "0x7374657665/horner:{{ .Values.tag }}"
+          env:
+            - name: DB_LOCATION
+              value: /data/horner.sqlite
+          ports:
+            - containerPort: 8888
+          volumeMounts:
+            - name: data-volume
+              mountPath: /data
+      volumes:
+        - name: data-volume
+          {{- if .Values.claimName }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.claimName }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
