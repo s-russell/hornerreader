@@ -18,10 +18,21 @@ var hornerReadingPlan = []HornerReadingPlanItem{
 	{"Epistles B", Category{[]Book{I_Thessalonians, II_Thessalonians, I_Timothy, II_Timothy, Titus, Philemon, James, I_Peter, II_Peter, I_John, II_John, III_John, Jude, Revelations}}},
 }
 
-func GetHornerReadingPlan(readingNum int) map[string]CategoryReading {
-	var readingsByCategory = make(map[string]CategoryReading, len(hornerReadingPlan))
-	for _, item := range hornerReadingPlan {
-		readingsByCategory[item.Name] = item.GetReading(readingNum)
+type HornerReading struct {
+	Name    string `json:"category"`
+	Book    string `json:"book"`
+	Chapter int    `json:"chapter"`
+}
+
+func GetHornerReadingPlan(readingNum int) []HornerReading {
+	var readings = make([]HornerReading, len(hornerReadingPlan))
+	for i, item := range hornerReadingPlan {
+		categoryReading := item.GetReading(readingNum)
+		readings[i] = HornerReading{
+			item.Name,
+			categoryReading.BookName,
+			categoryReading.Chapter,
+		}
 	}
-	return readingsByCategory
+	return readings
 }

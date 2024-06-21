@@ -1,26 +1,28 @@
 import {FC} from "react";
-import {HornerReading} from "../../api/horner-reading.ts";
+import {ReadingItem} from "../../api/horner-reading.ts";
 
 
-const Reading: FC<{ reading: HornerReading}> = ({reading }) => {
+const Reading: FC<{ reading: Array<ReadingItem>}> = ({reading }) => {
     const rows = [
+        "Pentateuch",
+        "Writings",
+        "Psalms",
+        "Proverbs",
+        "Wisdom",
+        "Prophets",
+        "Gospels",
         "Acts",
         "Epistles A",
         "Epistles B",
-        "Gospels",
-        "Pentateuch",
-        "Prophets",
-        "Proverbs",
-        "Psalms",
-        "Wisdom",
-        "Writings",
     ]
+    const readingByCategory: { [key: string]: {book: string, chapter: number}} = {}
+    reading.forEach(({category, book, chapter}) => readingByCategory[category] = {book, chapter})
     return <table><tbody>
 
         {rows.map( row =>
             <tr key={row}>
                 <td >{row}</td>
-                <td>{reading[row].bookName} {reading[row].chapter}</td> //@ts-ignore TS7053
+                <td>{readingByCategory[row].book} {readingByCategory[row].chapter}</td>
             </tr>
         )}
     </tbody>

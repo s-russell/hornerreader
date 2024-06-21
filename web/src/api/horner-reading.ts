@@ -1,63 +1,61 @@
 type ReadingItem = {
-    bookName: string;
+    category: string;
+    book: string;
     chapter: number;
 }
 
-type HornerReading = {
-    "Acts": ReadingItem,
-    "Epistles A": ReadingItem,
-    "Epistles B": ReadingItem,
-    "Gospels": ReadingItem,
-    "Pentateuch": ReadingItem,
-    "Prophets": ReadingItem,
-    "Proverbs": ReadingItem,
-    "Psalms": ReadingItem,
-    "Wisdom": ReadingItem,
-    "Writings": ReadingItem
-}
-
-const firstReading = {
-    "Acts": {
-        "bookName": "Acts",
+const firstReading = [
+    {
+        "category": "Pentateuch",
+        "book": "Genesis",
         "chapter": 1
     },
-    "Epistles A": {
-        "bookName": "Romans",
+    {
+        "category": "Writings",
+        "book": "Joshua",
         "chapter": 1
     },
-    "Epistles B": {
-        "bookName": "I Thessalonians",
+    {
+        "category": "Psalms",
+        "book": "Psalms",
         "chapter": 1
     },
-    "Gospels": {
-        "bookName": "Matthew",
+    {
+        "category": "Proverbs",
+        "book": "Proverbs",
         "chapter": 1
     },
-    "Pentateuch": {
-        "bookName": "Genesis",
+    {
+        "category": "Wisdom",
+        "book": "Job",
         "chapter": 1
     },
-    "Prophets": {
-        "bookName": "Isaiah",
+    {
+        "category": "Prophets",
+        "book": "Isaiah",
         "chapter": 1
     },
-    "Proverbs": {
-        "bookName": "Proverbs",
+    {
+        "category": "Gospels",
+        "book": "Matthew",
         "chapter": 1
     },
-    "Psalms": {
-        "bookName": "Psalms",
+    {
+        "category": "Acts",
+        "book": "Acts",
         "chapter": 1
     },
-    "Wisdom": {
-        "bookName": "Job",
+    {
+        "category": "Epistles A",
+        "book": "Romans",
         "chapter": 1
     },
-    "Writings": {
-        "bookName": "Joshua",
+    {
+        "category": "Epistles B",
+        "book": "I Thessalonians",
         "chapter": 1
     }
-} as HornerReading
+] as Array<ReadingItem>
 
 async function getHornerReading(readingNumber: number = 1) {
 
@@ -67,9 +65,9 @@ async function getHornerReading(readingNumber: number = 1) {
         return firstReading
     }
 
-    return (await resp.json()) as HornerReading
+    return (await resp.json()) as Array<ReadingItem>
 }
 
-export type { HornerReading, ReadingItem}
+export type { ReadingItem}
 export { firstReading }
 export default getHornerReading
