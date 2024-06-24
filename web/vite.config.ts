@@ -9,5 +9,9 @@ export default defineConfig({
             "/api": "http://localhost:8888",
             "/config.json": "http://localhost:8888"
         }
+    },
+    test: {
+        include: ['**/*.test.tsx', '**/*.test.ts'],
+        globals: true
     }
 })
