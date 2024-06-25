@@ -33,8 +33,13 @@ func Reader(hornerSvc *horner.HornerService) *http.ServeMux {
 		writer.Write(jsonReading)
 	})
 
-	readerMux.HandleFunc("/htmx/reading/{readingNumber}", func(w http.ResponseWriter, request *http.Request) {
-		readingNumber, err := strconv.Atoi(request.PathValue("readingNumber"))
+	readerMux.HandleFunc("/htmx/reading", func(w http.ResponseWriter, request *http.Request) {
+		queryParams := request.URL.Query()
+		readingNumberParam := queryParams.Get("n")
+		if len(readingNumberParam) == 0 {
+			w.WriteHeader(http.StatusNotFound)
+		}
+		readingNumber, err := strconv.Atoi(readingNumberParam)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 		}
