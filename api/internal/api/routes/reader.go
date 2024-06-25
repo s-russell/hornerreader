@@ -2,13 +2,13 @@ package routes
 
 import (
 	"encoding/json"
-	"jerubaal.com/horner/internal/api/services"
+	"jerubaal.com/horner/internal/api/services/horner"
 	"jerubaal.com/horner/internal/reader"
 	"net/http"
 	"strconv"
 )
 
-func Reader(hornerSvc *services.HornerService) *http.ServeMux {
+func Reader(hornerSvc *horner.HornerService) *http.ServeMux {
 	readerMux := http.NewServeMux()
 
 	readerMux.HandleFunc("/reading/{readingNumber}", func(writer http.ResponseWriter, request *http.Request) {
@@ -31,6 +31,16 @@ func Reader(hornerSvc *services.HornerService) *http.ServeMux {
 		writer.Header().Set("Content-Type", "application/json")
 		writer.WriteHeader(http.StatusOK)
 		writer.Write(jsonReading)
+	})
+
+	readerMux.HandleFunc("/htmx/reading/{readingNumber}", func(w http.ResponseWriter, request *http.Request) {
+		readingNumber, err := strconv.Atoi(request.PathValue("readingNumber"))
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+		}
+		reading := reader.GetHornerReadingPlan(readingNumber)
+		w.Header().Set("Content-Type", "text/html")
+		hornerSvc.RenderReadingHTML(w, &reading)
 	})
 
 	return readerMux

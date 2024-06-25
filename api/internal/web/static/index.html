@@ -2,14 +2,27 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script type="module" crossorigin src="/assets/index-DwMMQlB7.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-RnsLewAF.css">
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script type="application/javascript" src="assets/htmx/2.0.0/htmx.min.js"></script>
 </head>
 
 <body>
-  <div id="root"></div>
+<h1>Horner Bible Reading Plan</h1>
+<hr/>
+<button>previous</button>
+<input type="number" />
+<button>next</button>
+<table>
+    <thead>
+    <tr>
+        <td>Category</td>
+        <td>Reading</td>
+    </tr>
+    </thead>
+    <tbody hx-get="/api/reader/htmx/reading/1" hx-trigger="load">
+    </tbody>
+</table>
 </body>
 
 </html>

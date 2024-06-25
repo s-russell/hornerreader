@@ -4,17 +4,18 @@ import (
 	"github.com/jmoiron/sqlx"
 	"jerubaal.com/horner/internal/api/routes"
 	"jerubaal.com/horner/internal/api/services"
+	"jerubaal.com/horner/internal/api/services/horner"
 	"net/http"
 )
 
 type API struct {
 	UserSvc   *services.UserSvc
-	HornerSvc *services.HornerService
+	HornerSvc *horner.HornerService
 }
 
 func Build(db *sqlx.DB) API {
 	userSvc := services.NewUserSvc(db)
-	hornerSvc := services.NewHornerService(db)
+	hornerSvc := horner.NewHornerService(db)
 	return API{&userSvc, &hornerSvc}
 }
 
