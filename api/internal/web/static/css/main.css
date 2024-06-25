@@ -1,0 +1,38 @@
+section.main {
+    margin: auto;
+    width: 75%
+}
+
+#controls {
+    width: 100%;
+    text-align: center;
+}
+
+hr {
+    margin-bottom: 1em;
+}
+
+table {
+    margin-bottom: 1em;
+    border: 2px solid black;
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%
+}
+
+table td {
+    padding: 0.5em
+}
+
+thead td {
+    border-bottom: 1px solid black;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: lightgray;
+}
+
+tr td:first-child {
+    border-right: 1px solid black;
+}
