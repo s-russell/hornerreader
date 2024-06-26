@@ -1,10 +1,10 @@
-package horner
+package reading
 
 import (
 	"embed"
 	"github.com/jmoiron/sqlx"
 	"html/template"
-	"jerubaal.com/horner/internal/reader"
+	"jerubaal.com/horner/internal/resources/reading/horner"
 	"log"
 	"net/http"
 	"os"
@@ -32,7 +32,7 @@ func NewHornerService(db *sqlx.DB) HornerService {
 	return HornerService{logger, templates, db}
 }
 
-func (h *HornerService) RenderReadingHTML(w http.ResponseWriter, reading *[]reader.HornerReading) {
+func (h *HornerService) RenderReadingHTML(w http.ResponseWriter, reading *[]horner.HornerReading) {
 	err := h.templates.ExecuteTemplate(w, "reading.gohtml", reading)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

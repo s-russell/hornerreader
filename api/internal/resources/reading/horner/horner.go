@@ -1,4 +1,4 @@
-package reader
+package horner
 
 type HornerReadingPlanItem struct {
 	Name string
@@ -24,7 +24,7 @@ type HornerReading struct {
 	Chapter int    `json:"chapter"`
 }
 
-func GetHornerReadingPlan(readingNum int) []HornerReading {
+func GetNumber(readingNum int) []HornerReading {
 	var readings = make([]HornerReading, len(hornerReadingPlan))
 	for i, item := range hornerReadingPlan {
 		categoryReading := item.GetReading(readingNum)

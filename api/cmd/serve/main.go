@@ -1,8 +1,7 @@
 package main
 
 import (
-	"jerubaal.com/horner/internal/api"
-	"jerubaal.com/horner/internal/web"
+	"jerubaal.com/horner/internal/bootstrap"
 	"log"
 	"net/http"
 )
@@ -11,18 +10,15 @@ func main() {
 
 	logger := log.Default()
 
-	db, err := api.GetDB()
+	db, err := bootstrap.GetDB()
 	if err != nil {
 		logger.Fatal(err)
 	}
 	defer db.Close()
 
-	apiSvc := api.Build(db)
-
 	mux := http.NewServeMux()
-	apiSvc.AddRoutes(mux)
-	web.AddRoutes(mux)
 
-	logger.Println("Serving api on http://localhost:8888")
-	http.ListenAndServe(":8888", mux)
+	app := bootstrap.NewApplication(db, mux, logger)
+
+	app.Start()
 }

@@ -1,4 +1,4 @@
-package reader
+package horner
 
 type Book struct {
 	Name        string
