@@ -23,6 +23,6 @@ func (app *Application) Start() {
 
 	web.AddRoutes(app.mux)
 
-	app.logger.Println("Serving api on http://localhost:8888")
+	app.logger.Println("Serving Horner Reader on http://localhost:8888")
 	http.ListenAndServe(":8888", app.mux)
 }
