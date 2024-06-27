@@ -1,7 +1,27 @@
-{{- /*gotype: []jerubaal.com/horner/internal/horner.HornerReading*/ -}}
-{{ range . }}
+{{- /*gotype: jerubaal.com/horner/internal/resources/reading.ReaderTemplateData*/ -}}
+{{ range .Readings }}
 <tr>
     <td>{{ .Name }}</td>
     <td>{{ .Book }} {{ .Chapter }}</td>
 </tr>
 {{ end }}
+<tr>
+    <td colspan="2">
+        <div id="controls">
+            <button id="prev"
+                    hx-get="{{ .PreviousReading }}"
+                    hx-trigger="click"
+                    hx-target="#reading"
+                    {{ if not .HasPreviousReading }}
+                    disabled
+                    {{ end }}
+            >previous</button>
+            <span>Reading {{ .ReadingNumber}}</span>
+            <button id="next"
+                    hx-get="{{ .NextReading }}"
+                    hx-trigger="click"
+                    hx-target="#reading"
+            >next</button>
+        </div>
+    </td>
+</tr>

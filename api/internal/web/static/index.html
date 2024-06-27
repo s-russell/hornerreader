@@ -23,19 +23,6 @@
         <tbody id="reading">
         </tbody>
     </table>
-    <div id="controls">
-        <button disabled id="prev">previous</button>
-        <input hx-get="/api/reader/htmx/reading"
-               hx-params="n"
-               hx-target="#reading"
-               hx-trigger="load, change"
-               id="currentReading"
-               min="1"
-               name="n"
-               type="number"
-               value="1"/>
-        <button id="next">next</button>
-    </div>
 </section>
 <script src="js/reader.js" type="application/javascript"></script>
 </body>

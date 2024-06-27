@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 var (
@@ -32,9 +33,44 @@ func NewHornerService(db *sqlx.DB) HornerService {
 	return HornerService{logger, templates, db}
 }
 
-func (h *HornerService) RenderReadingHTML(w http.ResponseWriter, reading *[]horner.HornerReading) {
-	err := h.templates.ExecuteTemplate(w, "reading.gohtml", reading)
+type ReaderTemplateData struct {
+	PreviousReading    string
+	HasPreviousReading bool
+	NextReading        string
+	Readings           []horner.HornerReading
+	ReadingNumber      int
+}
+
+func getTemplateData(readingNumber int) ReaderTemplateData {
+	reading := horner.GetNumber(readingNumber)
+	if readingNumber == 1 {
+		return ReaderTemplateData{
+			"",
+			false,
+			"/reading/2",
+			reading,
+			1,
+		}
+	} else {
+		return ReaderTemplateData{
+			"/reading/" + strconv.Itoa(readingNumber-1),
+			true,
+			"/reading/" + strconv.Itoa(readingNumber+1),
+			reading,
+			readingNumber,
+		}
+	}
+}
+
+func (h *HornerService) RenderReadingHTML(w http.ResponseWriter, readingNumber int) {
+
+	err := h.templates.ExecuteTemplate(
+		w,
+		"reading.gohtml",
+		getTemplateData(readingNumber),
+	)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		h.Logger.Printf("Failed to render reading.gohtml template: %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
