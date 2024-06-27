@@ -1,6 +1,7 @@
 package reading
 
 import (
+	"fmt"
 	"github.com/jmoiron/sqlx"
 	"net/http"
 	"strconv"
@@ -19,6 +20,7 @@ func Serve(db *sqlx.DB) *http.ServeMux {
 		}
 
 		writer.Header().Set("Content-Type", "text/html")
+		writer.Header().Set("HX-Trigger-After-Swap", fmt.Sprintf("{ \"newReading\": %d }", readingNumber))
 		hornerSvc.RenderReadingHTML(writer, readingNumber)
 	})
 

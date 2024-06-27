@@ -19,9 +19,10 @@ var hornerReadingPlan = []HornerReadingPlanItem{
 }
 
 type HornerReading struct {
-	Name    string `json:"category"`
-	Book    string `json:"book"`
-	Chapter int    `json:"chapter"`
+	Name      string `json:"category"`
+	Book      string `json:"book"`
+	Chapter   int    `json:"chapter"`
+	Completed bool   `json:"completed"`
 }
 
 func GetNumber(readingNum int) []HornerReading {
@@ -32,6 +33,7 @@ func GetNumber(readingNum int) []HornerReading {
 			item.Name,
 			categoryReading.BookName,
 			categoryReading.Chapter,
+			false,
 		}
 	}
 	return readings

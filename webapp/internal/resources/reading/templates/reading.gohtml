@@ -1,12 +1,13 @@
 {{- /*gotype: jerubaal.com/horner/internal/resources/reading.ReaderTemplateData*/ -}}
 {{ range .Readings }}
 <tr>
+    <td> <input type="checkbox" class="readingProgress" {{ if .Completed }} checked {{ end }} /> </td>
     <td>{{ .Name }}</td>
     <td>{{ .Book }} {{ .Chapter }}</td>
 </tr>
 {{ end }}
 <tr>
-    <td colspan="2">
+    <td colspan="3">
         <div id="controls">
             <button id="prev"
                     hx-get="{{ .PreviousReading }}"
